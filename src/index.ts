@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import { seedDatabase } from "./db/seed";
-import { AuthRouter, UserRouter, RoleRouter } from "./routes";
+import { AuthRouter, UserRouter, RoleRouter, PermissionRouter } from "./routes";
 import cors from "cors";
 
 dotenv.config();
@@ -14,7 +14,8 @@ app.use(express.json());
 
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/users", UserRouter);
-app.use("/api/v1/role", UserRouter);
+app.use("/api/v1/roles", RoleRouter);
+app.use("/api/v1/permissions", PermissionRouter);
 
 async function startServer() {
   const PORT = process.env.PORT || 3000;
