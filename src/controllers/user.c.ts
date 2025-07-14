@@ -123,4 +123,31 @@ export const UserCtrl = {
       res.status(500).json({ error: "Failed to delete user" });
     }
   },
+
+  assignRoleToUser: async (req: Request, res: Response) => {
+    const { userId } = req.params;
+    const { roleIds } = req.body;
+
+    try {
+      await db.transaction(async (tx) => {
+        // Remove existing roles
+        await tx.delete(userRoles).where(eq(userRoles.userId, userId));
+
+        // Add new roles
+        if (roleIds.length > 0) {
+          await tx.insert(userRoles).values(
+            roleIds.map((roleId: number) => ({
+              userId,
+              roleId,
+            }))
+          );
+        }
+      });
+
+      res.status(200).json({ message: "Roles assigned successfully" });
+    } catch (error) {
+      console.error("Error assigning role to user:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  },
 };

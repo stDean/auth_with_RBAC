@@ -46,8 +46,8 @@ const seedPermissions = [
     category: "Role Management",
   },
   {
-    id: "role:update",
-    description: "Modify role permissions",
+    id: "role:manage",
+    description: "Manage role permissions",
     category: "Role Management",
   },
 

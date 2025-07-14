@@ -19,5 +19,10 @@ router.delete(
   requirePermission("user:delete"),
   UserCtrl.deleteUser
 );
+router.post(
+  "/:userId/roles",
+  requirePermission("role:assign"),
+  UserCtrl.assignRoleToUser
+);
 
 export default router;

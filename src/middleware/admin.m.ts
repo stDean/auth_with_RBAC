@@ -35,24 +35,6 @@ export const authenticateJWT = async (
   }
 };
 
-export const assignRoleToUser = async (
-  adminUserId: string,
-  targetUserId: string,
-  roleId: number
-) => {
-  // Verify admin has permission
-  const canAssign = await checkContextualPermission(adminUserId, "role:assign");
-  if (!canAssign) throw new Error("Forbidden");
-
-  await db
-    .insert(schema.userRoles)
-    .values({
-      userId: targetUserId,
-      roleId,
-    })
-    .onDuplicateKeyUpdate({ set: { roleId } });
-};
-
 export const updateRolePermissions = async (
   adminUserId: string,
   roleId: number,
